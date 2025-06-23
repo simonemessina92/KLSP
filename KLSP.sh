@@ -509,14 +509,17 @@ install() {
         #Save the container name.
         echo "$CONTAINER_NAME" > "${INSTALL_PATH}/container.conf"
         echo
-        echo "-------------------------------------"
-        echo "Install KiloLink Server SUCCESSFULLY!"
-        echo "-------------------------------------"
+        echo 
+        echo -e "\033[1;37;44m🎉 Installation Complete!!\033[0m"
+	echo 
         echo
-        echo "Please remember these access entrypoints:"
+	echo -e "\033[1;33mDefault credentials: \033[1;37madmin / Kiloview001\033[0m"
+	echo -e "\033[1;37mAt first login, you will be required to set a new password.\033[0m"
+	echo
+        echo "🌐 Ensure the following ports are open on your firewall:"
         echo
-        echo "* Access http://$stream_server_ip:$web_port for web management."
-        echo "* When you configure device to connects to the KiloLink Server, its IP is '$stream_server_ip' and access port is $klnk_port."
+        echo -e "\033[1;33m🖥️ Access http://$stream_server_ip:$web_port for web management.\033[0m"
+        echo -e "\033[1;36m🛡️ When you configure device to connects to the KiloLink Server, its IP is '$stream_server_ip' and access port is $klnk_port.\033[0m"        
         echo "* Your docker container is named '$CONTAINER_NAME', you can use 'docker' commands to maintain it."
         echo
         if [ ! -z "$no_avahi" ]; then
@@ -537,7 +540,7 @@ install() {
         echo
         echo "For other protocols such as RTSP,SRT,webrtc,..., you also need to open the service port range [30000, 30300] as specified in the corresponding protocol."
         echo
-        echo "ENJOY IT!"
+        echo -e "\033[1;35mThank you for choosing Kiloview — Your AVoIP Trailblazer!\033[0m"
         echo
     else
         echo "[ERROR!] Create docker container for KiloLink Server failed!" 
