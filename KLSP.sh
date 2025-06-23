@@ -1,4 +1,37 @@
-#!/bin/sh
+#!/bin/bash
+
+# === Kiloview KLSP Enhanced Installer ===
+echo -e "\n\033[1;44m     ðŸš€ Kiloview KLSP Installer Starting...     \033[0m\n"
+sleep 1
+
+echo -e "\033[1;36m\nSelect an option:\033[0m"
+echo -e "  1) Install Kiloview KLSP"
+echo -e "  2) Uninstall any version of Kiloview KLSP\n"
+read -rp "Enter choice [1-2]: " CHOICE
+
+if [[ "$CHOICE" == "2" ]]; then
+    echo -e "\n\033[1;36m=== Uninstalling Kiloview KLSP ===\033[0m"
+    docker rm -f KLNKSVR-pro >/dev/null 2>&1 && echo "Container removed."
+    docker rmi -f $(docker images "kiloview/klnk-pro" -q) 2>/dev/null && echo "Image(s) removed."
+    rm -rf /root/kilolink-server && echo "Data directory removed."
+    echo -e "\n\033[1;32mâœ… Cleanup complete.\033[0m"
+    exit 0
+fi
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[1;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}Kiloview KiloLink Server Pro Installer${NC}"
+
+# Check for curl
+if ! command -v curl > /dev/null 2>&1; then
+    echo -e "${RED}[ERROR] 'curl' is not installed. Please install it and try again.${NC}"
+    exit 1
+fi
+
 
 #use 'sh' for best compatible caps.
 #Kiloview KiloLink Server auto install script.
@@ -51,15 +84,15 @@ fi
 
 $view_eula << KLS_EULA_END
 
-Kiloview® KiloLink Server (KLS) License Agreement
+KiloviewÂ® KiloLink Server (KLS) License Agreement
 
-Please read this document carefully before proceeding. You (the undersigned Licensee) hereby agree to the terms of this Kiloview® KiloLink Server (KLS) License Agreement (the "License") in order to use the software. Kiloview Electronics Co., Ltd. agrees to grant you certain rights as set forth herein under these terms.
+Please read this document carefully before proceeding. You (the undersigned Licensee) hereby agree to the terms of this KiloviewÂ® KiloLink Server (KLS) License Agreement (the "License") in order to use the software. Kiloview Electronics Co., Ltd. agrees to grant you certain rights as set forth herein under these terms.
 
 1. Definitions
-a. "Kiloview" refers to the company name Kiloview Electronics Co., Ltd. Kiloview® is a registered trademark of Kiloview Electronics Co., Ltd.
-b. "KLS" means the entirety of the Kiloview® KiloLink Server, including those portions pertaining to specific software provided to you under this License, including any source code, compiled executables or libraries, Docker images or containers, and all documentation provided to you.
+a. "Kiloview" refers to the company name Kiloview Electronics Co., Ltd. KiloviewÂ® is a registered trademark of Kiloview Electronics Co., Ltd.
+b. "KLS" means the entirety of the KiloviewÂ® KiloLink Server, including those portions pertaining to specific software provided to you under this License, including any source code, compiled executables or libraries, Docker images or containers, and all documentation provided to you.
 d. "KLS Documentation" refers to the documentation provided with the KLS software, including the portion pertaining to the Specific KLS.
-e. "Specific KLS" refers to the specific KLS for which you intend to use the Kiloview® KLS under the constraints of this License for other special purposes (for example, integration with your systems and accomplishing certain objectives through API calls). These are examples only, and Kiloview may add or subtract to this list at its discretion, and you agree to use them only in accordance with this Agreement, including the documentation related to it.
+e. "Specific KLS" refers to the specific KLS for which you intend to use the KiloviewÂ® KLS under the constraints of this License for other special purposes (for example, integration with your systems and accomplishing certain objectives through API calls). These are examples only, and Kiloview may add or subtract to this list at its discretion, and you agree to use them only in accordance with this Agreement, including the documentation related to it.
 
 2. License
 a. Pursuant to the terms, conditions, and requirements of this License and the KLS Documentation, you are hereby granted a nonexclusive royalty-free license to use the KLS for managing products or devices produced and sold by Kiloview that are suitable for management and control by KLS. A separate license agreement with Kiloview is required in order to commercially exploit or otherwise distribute any products that use or embed the KLS software, or use part or all of the KLS and/or Specific KLS.
@@ -93,12 +126,12 @@ You agree to indemnify and hold Kiloview harmless from any third party claim, lo
 Neither Kiloview nor its suppliers or licensors shall be liable for any indirect, special, incidental or consequential damages or loss (including damages for loss of business, loss of profits, or the like), arising out of this License whether based on breach of contract, tort (including negligence), strict liability, product liability or otherwise, even if Kiloview or its representatives have been advised of the possibility of such damages. Some states do not allow the limitation or exclusion of liability for incidental or consequential damages, so this limitation or exclusion may not apply to you. The limited warranty, exclusive remedies and limited liability set forth above are fundamental elements of the basis of the bargain between Kiloview and you. You agree that Kiloview would not be able to provide the Software on an economic basis without such limitations. In no event will Kiloview be liable for any amount greater than what you actually paid for the KLS.
 
 9. Termination
-Either party may terminate this License upon thirty (30) days written notice. Either party may also terminate if the other party materially defaults in the performance of any provision of this License, the non-defaulting party gives written notice to the other party of such default, and the defaulting party fails to cure such default within ten (10) days after receipt of such notice. Upon the termination of this License, the rights and licenses granted to you by Kiloview pursuant to this License will automatically cease. Nothing herein shall prevent either party from pursuing any injunctive relief at any time if necessary, or seeking any other remedies available in equity. Each party reserves the right to pursue all legal and equitable remedies available. Upon termination, all KLS materials shall be promptly returned to Kiloview, and any and all copies stored in electronic or other format shall be deleted and destroyed, and any rights to use Kiloview’s trademarks are revoked. If this License is terminated for any reason, the provisions of Sections 1, 3, 6, 7, 8, 9, 10, and 11 shall survive such termination.
+Either party may terminate this License upon thirty (30) days written notice. Either party may also terminate if the other party materially defaults in the performance of any provision of this License, the non-defaulting party gives written notice to the other party of such default, and the defaulting party fails to cure such default within ten (10) days after receipt of such notice. Upon the termination of this License, the rights and licenses granted to you by Kiloview pursuant to this License will automatically cease. Nothing herein shall prevent either party from pursuing any injunctive relief at any time if necessary, or seeking any other remedies available in equity. Each party reserves the right to pursue all legal and equitable remedies available. Upon termination, all KLS materials shall be promptly returned to Kiloview, and any and all copies stored in electronic or other format shall be deleted and destroyed, and any rights to use KiloviewÂ’s trademarks are revoked. If this License is terminated for any reason, the provisions of Sections 1, 3, 6, 7, 8, 9, 10, and 11 shall survive such termination.
 
 10. General
 Notices given hereunder may be sent to either party at the address below by either overnight mail or by email and are deemed effective when sent. This License shall be governed by the laws of the People's Republic of China, without regard to its choice of law rules, and you agree to exclusive jurisdiction therein. This License contains the complete agreement between you and Kiloview with respect to the subject matter (KLS) of this License, and supersedes all prior or contemporaneous agreements or understandings, whether oral or written. It does not replace any licenses accompanying Kiloview products. You may not assign this KLS License.
 
-May 2024    Kiloview® Software License Agreement
+May 2024    KiloviewÂ® Software License Agreement
 
 KLS_EULA_END
 
